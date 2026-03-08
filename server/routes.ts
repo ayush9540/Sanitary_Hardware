@@ -1,3 +1,5 @@
+import multer from "multer";
+import path from "path";
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
@@ -6,6 +8,15 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express,
 ): Promise<Server> {
+
+  const storageConfig = multer.diskStorage({
+    destination: "server/uploads",
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    },
+  });
+
+const upload = multer({ storage: storageConfig });
   // put application routes here
   // prefix all routes with /api
 
@@ -30,6 +41,15 @@ export async function registerRoutes(
     } catch (error) {
       res.status(500).json({ error: "Delete failed" });
     }
+  });
+
+  app.post("/api/upload", upload.single("image"), (req, res) => {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+    res.json({
+      imageUrl: "/uploads/" + req.file.filename
+    });
   });
 
   app.put("/api/products/:id", async (req, res) => {

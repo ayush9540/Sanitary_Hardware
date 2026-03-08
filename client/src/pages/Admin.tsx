@@ -7,7 +7,7 @@ export default function Admin() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [inStock, setInStock] = useState(true);
 
@@ -23,6 +23,17 @@ export default function Admin() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    let imageUrl = "";
+    if (image) {
+      const formData = new FormData();
+      formData.append("image", image);
+      const uploadRes = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await uploadRes.json();
+      imageUrl = data.imageUrl;
+    }
 
     await fetch(editingId ? `/api/products/${editingId}` : "/api/products", {
       method: editingId ? "PUT" : "POST",
@@ -33,7 +44,7 @@ export default function Admin() {
         name,
         price,
         category,
-        image,
+        image: imageUrl,
         description,
         inStock,
       }),
@@ -43,7 +54,7 @@ export default function Admin() {
     setName("");
     setPrice("");
     setCategory("");
-    setImage("");
+    setImage(null);
     setDescription("");
     setInStock(true);
 
@@ -100,8 +111,8 @@ export default function Admin() {
         <input
           className="border rounded-md p-2"
           placeholder="Image URL"
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
+          type="file"
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
         />
 
         <textarea

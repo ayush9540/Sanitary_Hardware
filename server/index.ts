@@ -5,6 +5,9 @@ import { serveStatic } from "./static";
 import { createServer } from "http";
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static("server/uploads"));
 const httpServer = createServer(app);
 
 declare module "http" {
