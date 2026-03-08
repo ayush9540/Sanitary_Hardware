@@ -1,3 +1,6 @@
+import { eq } from "drizzle-orm";
+import { db } from "./db";
+import { products } from "../shared/schema";
 import { type User, type InsertUser } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -39,20 +42,15 @@ export class MemStorage implements IStorage {
   }
 
   async insertProduct(product: any) {
-    const newProduct = {
-      id: Date.now().toString(),
-      ...product
-    };
-
-    this.products.push(newProduct);
-    return newProduct;
+    const result = await db.insert(products).values(product).returning();
+    return result[0];
   }
 
   async deleteProduct(id: string) {
-    this.products = this.products.filter((p) => p.id !== id);
+    await db.delete(products).where(eq(products.id, id));
   }
   async getProducts() {
-    return this.products;
+    return await db.select().from(products);
   }
   private products: any[] = [];
 
