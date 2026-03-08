@@ -22,7 +22,7 @@ export function Header() {
           <Link href="/">
             <a className="flex items-center gap-2 group" data-testid="link-home">
               <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                LUXE
+                Kanhaiya Sanitary
               </span>
               <span className="text-xl md:text-2xl font-light tracking-tight text-muted-foreground">
                 store

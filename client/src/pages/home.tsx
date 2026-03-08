@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout/layout";
 import { ProductCard } from "@/components/product-card";
 import { products, categories } from "@/lib/products";
@@ -7,15 +7,38 @@ import { motion } from "framer-motion";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [newProducts, setNewProducts] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch("/api/products")
+      .then((res) => res.json())
+      .then((data) => setNewProducts(data));
+  }, []);
+
+  // convert admin products to match ProductCard format
+  const formattedAdminProducts = newProducts.map((p) => ({
+    id: p.id,
+    name: p.name,
+    price: Number(p.price),
+    category: p.category || "General",
+    images: [p.image],
+    rating: 4.5,
+    reviews: 0,
+    inStock: p.inStock,
+  }));
+
+  const allProducts = [...products, ...formattedAdminProducts];
 
   const filteredProducts = selectedCategory
-    ? products.filter((p) => p.category === selectedCategory)
-    : products;
+    ? allProducts.filter((p) => p.category === selectedCategory)
+    : allProducts;
 
   return (
     <Layout>
+      {" "}
       <section className="relative py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/50 via-background to-background" />
+        {" "}
+        <div className="absolute inset-0 bg-gradient-to-br from-accent/50 via-background to-background" />{" "}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -23,21 +46,25 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
+            {" "}
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4">
-              Curated for the
-              <span className="text-primary block">discerning eye</span>
-            </h1>
+              Kanhaiya
+              <span className="text-primary block">Sanitary Store</span>{" "}
+            </h1>{" "}
             <p className="text-lg text-muted-foreground mb-8">
-              Discover our collection of thoughtfully selected products that
-              blend timeless design with modern craftsmanship.
+              Trusted Hardware & Sanitary Store in Chhibramau <br />
+              Genuine Brands • Fair Pricing • 20+ Years of Service
             </p>
-            <Button size="lg" className="rounded-full px-8" data-testid="button-shop-now">
+            <Button
+              size="lg"
+              className="rounded-full px-8"
+              data-testid="button-shop-now"
+            >
               Shop Collection
             </Button>
           </motion.div>
         </div>
       </section>
-
       <section className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-8 scrollbar-hide">
@@ -49,6 +76,7 @@ export default function Home() {
             >
               All Products
             </Button>
+
             {categories.map((category) => (
               <Button
                 key={category}

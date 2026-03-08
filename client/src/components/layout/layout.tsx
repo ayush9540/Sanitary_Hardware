@@ -14,13 +14,13 @@ export function Layout({ children }: LayoutProps) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold tracking-tight">LUXE</span>
+              <span className="text-lg font-bold tracking-tight">Kanhaiya Sanitary</span>
               <span className="text-lg font-light text-muted-foreground">
                 store
               </span>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 Luxe Store. All rights reserved.
+              © 2024 Kanhaiya Sanitary Store. All rights reserved.
             </p>
           </div>
         </div>
