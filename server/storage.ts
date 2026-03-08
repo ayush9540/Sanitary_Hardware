@@ -55,14 +55,13 @@ export class MemStorage implements IStorage {
   private products: any[] = [];
 
   async updateProduct(id: string, data: any) {
-    const index = this.products.findIndex((p) => p.id === id);
-    if (index !== -1) {
-      this.products[index] = {
-        ...this.products[index],
-        ...data
-      };
-    }
-    return this.products[index];
+    const result = await db
+      .update(products)
+      .set(data)
+      .where(eq(products.id, id))
+      .returning();
+
+    return result[0];
   }
 }
 

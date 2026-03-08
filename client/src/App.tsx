@@ -1,4 +1,5 @@
 import Admin from "./pages/Admin";
+import Login from "./pages/Login";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -20,8 +21,9 @@ function Router() {
       <Route path="/cart" component={CartPage} />
       <Route path="/checkout" component={CheckoutPage} />
       <Route path="/payment-result" component={PaymentResultPage} />
+      <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
-      <Route component={NotFound} />
+      <Route component={NotFound} />     
     </Switch>
   );
 }

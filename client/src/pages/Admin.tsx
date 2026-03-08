@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 
 export default function Admin() {
   const [products, setProducts] = useState<any[]>([]);
-  const [editingId, setEditingId] = useState<string | null>(null);
-
+  const [editingId, setEditingId] = useState<number | null>(null);
+  const [existingImage, setExistingImage] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
@@ -23,7 +23,7 @@ export default function Admin() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    let imageUrl = "";
+    let imageUrl = existingImage;
     if (image) {
       const formData = new FormData();
       formData.append("image", image);
@@ -34,11 +34,12 @@ export default function Admin() {
       const data = await uploadRes.json();
       imageUrl = data.imageUrl;
     }
-
+    console.log("editingId:", editingId);
     await fetch(editingId ? `/api/products/${editingId}` : "/api/products", {
       method: editingId ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": localStorage.getItem("token") || ""
       },
       body: JSON.stringify({
         name,
@@ -57,7 +58,7 @@ export default function Admin() {
     setImage(null);
     setDescription("");
     setInStock(true);
-
+    setExistingImage("");
     loadProducts();
   };
 
@@ -66,7 +67,8 @@ export default function Admin() {
     setName(p.name);
     setPrice(p.price);
     setCategory(p.category);
-    setImage(p.image);
+    setImage(null);
+    setExistingImage(p.image);
     setDescription(p.description);
     setInStock(p.inStock);
   };
@@ -74,8 +76,10 @@ export default function Admin() {
   const deleteProduct = async (id: any) => {
     await fetch(`/api/products/${id}`, {
       method: "DELETE",
+      headers: {
+        Authorization: localStorage.getItem("token") || ""
+      }
     });
-
     loadProducts();
   };
 
@@ -114,6 +118,9 @@ export default function Admin() {
           type="file"
           onChange={(e) => setImage(e.target.files?.[0] || null)}
         />
+        {editingId && existingImage && (
+          <img src={existingImage} className="w-24 mt-2 rounded" />
+        )}
 
         <textarea
           className="border rounded-md p-2 md:col-span-2"
