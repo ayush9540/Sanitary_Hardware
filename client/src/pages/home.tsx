@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout/layout";
 import { ProductCard } from "@/components/product-card";
-import { products, categories } from "@/lib/products";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -11,9 +10,10 @@ export default function Home() {
 
   useEffect(() => {
     fetch("/api/products")
-      .then((res) => res.json())
-      .then((data) => setNewProducts(data));
-  }, []);
+    .then((res) => res.json())
+    .then((data) => setNewProducts(data))
+    .catch(console.error);
+}, []);
 
   // convert admin products to match ProductCard format
   const formattedAdminProducts = newProducts.map((p) => ({
@@ -27,7 +27,10 @@ export default function Home() {
     inStock: p.inStock,
   }));
 
-  const allProducts = [...products, ...formattedAdminProducts];
+  const allProducts = formattedAdminProducts;
+  const categories = Array.from(
+    new Set(allProducts.map((p) => p.category).filter(Boolean))
+  );
 
   const filteredProducts = selectedCategory
     ? allProducts.filter((p) => p.category === selectedCategory)

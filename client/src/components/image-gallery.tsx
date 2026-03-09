@@ -21,7 +21,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         <AnimatePresence mode="wait">
           <motion.img
             key={selectedImage}
-            src={images[selectedImage]}
+            src={images?.[selectedImage]}
             alt={`${productName} - Image ${selectedImage + 1}`}
             className="w-full h-full object-cover"
             initial={{ opacity: 0 }}
@@ -34,7 +34,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        {images.map((image, index) => (
+        {images?.map((image, index) => (
           <button
             key={index}
             onClick={() => setSelectedImage(index)}
@@ -61,7 +61,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
           </AccordionTrigger>
           <AccordionContent>
             <div className="grid grid-cols-1 gap-4 pb-4">
-              {images.map((image, index) => (
+              {images?.map((image, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 10 }}

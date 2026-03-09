@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams, Link } from "wouter";
 import { Layout } from "@/components/layout/layout";
 import { ImageGallery } from "@/components/image-gallery";
-import { getProductById } from "@/lib/products";
+import { useQuery } from "@tanstack/react-query";
 import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
 import { Star, Minus, Plus, ArrowLeft, Check, Truck } from "lucide-react";
@@ -10,12 +10,29 @@ import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
 export default function ProductPage() {
-  const params = useParams<{ id: string }>();
-  const productId = parseInt(params.id || "0");
-  const product = getProductById(productId);
+  const { id } = useParams();
+  const { data: product, isLoading } = useQuery({
+  queryKey: ["product", id],
+  queryFn: async () => {
+    const res = await fetch(`/api/products/${id}`);
+    if (!res.ok) throw new Error("Product not found");
+    const p = await res.json();
+    return {
+      ...p,
+      images: [p.image], // convert single image to array
+      rating: 4,
+      reviews: 0
+    };
+  },
+});
+
   const [quantity, setQuantity] = useState(1);
   const { addToCart } = useCart();
   const { toast } = useToast();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   if (!product) {
     return (

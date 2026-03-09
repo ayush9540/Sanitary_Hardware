@@ -50,6 +50,16 @@ export async function registerRoutes(
     res.json(products);
   });
 
+ app.get("/api/products/:id", async (req, res) => {
+    const { id } = req.params;
+    const products = await storage.getProducts(); // same source used by /api/products
+    const product = products.find((p: any) => p.id === id);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(product);
+  });
+
   // ADD PRODUCT (protected)
   app.post("/api/products", verifyAdmin, async (req, res) => {
     const product = req.body;
