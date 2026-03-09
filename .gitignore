@@ -7,3 +7,4 @@ uploads/
 server/uploads/
 vite.config.ts.*
 *.tar.gz
+.env
