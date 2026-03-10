@@ -44,6 +44,32 @@ export default function CheckoutPage() {
       setLocation(`/payment-result?status=failed&email=${encodeURIComponent(formData.email)}`);
     }
   };
+  // WhataApp Ordering
+  const handleWhatsAppOrder = () => {
+    const productList = items
+      .map((item) => `${item.product.name} (Qty: ${item.quantity})`)
+      .join(", ");
+
+    const message = `
+      Hello Kanhaiya Sanitary Store,
+      I want to place an order.
+
+      Products: ${productList}
+      Total: ₹${(totalPrice * 1.1).toFixed(2)}
+
+      Customer:
+      Name: ${formData.firstName} ${formData.lastName}
+      City: ${formData.city}
+      Address: ${formData.address}
+    `;
+      const encodedMessage = encodeURIComponent(message);
+      window.open(
+        `https://wa.me/919540772145?text=${encodedMessage}`,
+        "_blank"
+      );
+      clearCart();
+      setLocation("/");
+  };
 
   if (items.length === 0) {
     return (
@@ -76,7 +102,7 @@ export default function CheckoutPage() {
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <div className="space-y-8">
-              <motion.div
+              {/*<motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-card rounded-2xl border border-border/50 p-6"
@@ -100,7 +126,7 @@ export default function CheckoutPage() {
                     />
                   </div>
                 </div>
-              </motion.div>
+              </motion.div>*/}
 
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -108,7 +134,7 @@ export default function CheckoutPage() {
                 transition={{ delay: 0.1 }}
                 className="bg-card rounded-2xl border border-border/50 p-6"
               >
-                <h2 className="font-semibold text-lg mb-4">Shipping Address</h2>
+                <h2 className="font-semibold text-lg mb-4">Contact Information</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="firstName">First Name</Label>
@@ -158,7 +184,7 @@ export default function CheckoutPage() {
                       data-testid="input-city"
                     />
                   </div>
-                  <div>
+                  {/*<div>
                     <Label htmlFor="postalCode">Postal Code</Label>
                     <Input
                       id="postalCode"
@@ -169,11 +195,11 @@ export default function CheckoutPage() {
                       className="mt-1"
                       data-testid="input-postal-code"
                     />
-                  </div>
+                  </div>*/}
                 </div>
               </motion.div>
 
-              <motion.div
+              {/*<motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
@@ -230,7 +256,7 @@ export default function CheckoutPage() {
                   <Lock className="h-3 w-3" />
                   <span>Your payment information is secure</span>
                 </div>
-              </motion.div>
+              </motion.div>*/}
             </div>
 
             <motion.div
@@ -262,7 +288,7 @@ export default function CheckoutPage() {
                           Qty: {item.quantity}
                         </p>
                         <p className="text-sm font-medium">
-                          ${(item.product.price * item.quantity).toFixed(2)}
+                          ₹{(item.product.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -272,7 +298,7 @@ export default function CheckoutPage() {
                 <div className="border-t pt-4 space-y-2">
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Subtotal</span>
-                    <span>${totalPrice.toFixed(2)}</span>
+                    <span>₹{totalPrice.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Shipping</span>
@@ -280,17 +306,17 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Tax</span>
-                    <span>${(totalPrice * 0.1).toFixed(2)}</span>
+                    <span>₹{(totalPrice * 0.1).toFixed(2)}</span>
                   </div>
                   <div className="border-t pt-2 flex justify-between font-semibold text-lg">
                     <span>Total</span>
                     <span data-testid="text-checkout-total">
-                      ${(totalPrice * 1.1).toFixed(2)}
+                      ₹{(totalPrice * 1.1).toFixed(2)}
                     </span>
                   </div>
                 </div>
 
-                <Button
+                {/*<Button
                   type="submit"
                   className="w-full rounded-xl mt-6"
                   size="lg"
@@ -303,8 +329,16 @@ export default function CheckoutPage() {
                       Processing...
                     </>
                   ) : (
-                    `Pay $${(totalPrice * 1.1).toFixed(2)}`
+                    `Pay ₹${(totalPrice * 1.1).toFixed(2)}`
                   )}
+                </Button>*/}
+                <Button
+                  type="button"
+                  className="w-full rounded-xl mt-6"
+                  size="lg"
+                  onClick={handleWhatsAppOrder}
+                >
+                  Place Order on WhatsApp
                 </Button>
               </div>
             </motion.div>
