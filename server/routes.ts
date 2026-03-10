@@ -1,9 +1,10 @@
+import { storage } from "./storage"
 import multer from "multer";
 import path from "path";
 import jwt from "jsonwebtoken";
 import type { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage as cloudinaryStorage } from "./utils/cloudinary";
 
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "admin123";
@@ -32,7 +33,7 @@ export async function registerRoutes(
     },
   });
 
-  const upload = multer({ storage: storageConfig });
+  const upload = multer({ storage: cloudinaryStorage });
 
   // LOGIN
   app.post("/api/login", (req, res) => {
@@ -95,8 +96,8 @@ export async function registerRoutes(
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-    res.json({
-      imageUrl: "/uploads/" + req.file.filename,
+   res.json({
+      imageUrl: req.file?.path,
     });
   });
   return httpServer;
