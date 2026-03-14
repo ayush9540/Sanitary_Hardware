@@ -72,13 +72,14 @@ export default function Home() {
               size="lg"
               className="rounded-full px-8"
               data-testid="button-shop-now"
+              onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
             >
               Shop Collection
             </Button>
           </motion.div>
         </div>
       </section>
-      <section className="py-12 md:py-16">
+      <section id="products" className="py-12 md:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-8 scrollbar-hide">
             <Button
