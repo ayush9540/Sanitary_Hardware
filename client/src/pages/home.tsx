@@ -2,18 +2,27 @@ import { useState, useEffect } from "react";
 import { Layout } from "@/components/layout/layout";
 import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [newProducts, setNewProducts] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch("/api/products")
-    .then((res) => res.json())
-    .then((data) => setNewProducts(data))
-    .catch(console.error);
-}, []);
+      .then((res) => res.json())
+      .then((data) => {
+        setNewProducts(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
+  }, []);
 
   // convert admin products to match ProductCard format
   const formattedAdminProducts = newProducts.map((p) => ({
@@ -95,9 +104,17 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} />
-            ))}
+            {loading
+              ? Array.from({ length: 8 }).map((_, index) => (
+                  <div key={index} className="space-y-3">
+                    <Skeleton className="h-48 w-full" />
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-4 w-1/2" />
+                  </div>
+                ))
+              : filteredProducts.map((product, index) => (
+                  <ProductCard key={product.id} product={product} index={index} />
+                ))}
           </div>
 
           {filteredProducts.length === 0 && (

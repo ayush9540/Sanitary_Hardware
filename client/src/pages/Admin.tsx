@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
   const [products, setProducts] = useState<any[]>([]);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [existingImage, setExistingImage] = useState("");
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -10,6 +11,7 @@ export default function Admin() {
   const [image, setImage] = useState<File | null>(null);
   const [description, setDescription] = useState("");
   const [inStock, setInStock] = useState(true);
+  const { toast } = useToast();
 
   const loadProducts = () => {
     fetch("/api/products")
@@ -23,43 +25,56 @@ export default function Admin() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    let imageUrl = existingImage;
-    if (image) {
-      const formData = new FormData();
-      formData.append("image", image);
-      const uploadRes = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
+    try {
+      let imageUrl = existingImage;
+      if (image) {
+        const formData = new FormData();
+        formData.append("image", image);
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (!uploadRes.ok) throw new Error("Image upload failed");
+        const data = await uploadRes.json();
+        imageUrl = data.imageUrl;
+      }
+      console.log("editingId:", editingId);
+      const res = await fetch(editingId ? `/api/products/${editingId}` : "/api/products", {
+        method: editingId ? "PUT" : "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": localStorage.getItem("token") || ""
+        },
+        body: JSON.stringify({
+          name,
+          price,
+          category,
+          image: imageUrl,
+          description,
+          inStock: String(inStock),
+        }),
       });
-      const data = await uploadRes.json();
-      imageUrl = data.imageUrl;
+      if (!res.ok) throw new Error("Failed to save product");
+      toast({
+        title: editingId ? "Product updated" : "Product added",
+        description: `${name} has been ${editingId ? "updated" : "added"} successfully.`,
+      });
+      setEditingId(null);
+      setName("");
+      setPrice("");
+      setCategory("");
+      setImage(null);
+      setDescription("");
+      setInStock(true);
+      setExistingImage("");
+      loadProducts();
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Something went wrong",
+        variant: "destructive",
+      });
     }
-    console.log("editingId:", editingId);
-    await fetch(editingId ? `/api/products/${editingId}` : "/api/products", {
-      method: editingId ? "PUT" : "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("token") || ""
-      },
-      body: JSON.stringify({
-        name,
-        price,
-        category,
-        image: imageUrl,
-        description,
-        inStock,
-      }),
-    });
-
-    setEditingId(null);
-    setName("");
-    setPrice("");
-    setCategory("");
-    setImage(null);
-    setDescription("");
-    setInStock(true);
-    setExistingImage("");
-    loadProducts();
   };
 
   const editProduct = (p: any) => {
@@ -70,7 +85,7 @@ export default function Admin() {
     setImage(null);
     setExistingImage(p.image);
     setDescription(p.description);
-    setInStock(p.inStock);
+    setInStock(p.inStock === "true");
   };
 
   const deleteProduct = async (id: any) => {
