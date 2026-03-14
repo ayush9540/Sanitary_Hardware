@@ -20,6 +20,7 @@ export default function Home() {
     id: p.id,
     name: p.name,
     price: Number(p.price),
+    description: p.description || "",
     category: p.category || "General",
     images: [p.image],
     rating: 4.5,
