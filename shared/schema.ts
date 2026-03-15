@@ -29,3 +29,11 @@ export const products = pgTable("products", {
 export const insertProductSchema = createInsertSchema(products);
 export type InsertProduct = z.infer<typeof insertProductSchema>;
 export type Product = typeof products.$inferSelect;
+
+export const categories = pgTable("categories", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull().unique(),
+});
+export const insertCategorySchema = createInsertSchema(categories);
+export type InsertCategory = z.infer<typeof insertCategorySchema>;
+export type Category = typeof categories.$inferSelect;

@@ -47,25 +47,37 @@ export async function registerRoutes(
 
   // GET PRODUCTS
   app.get("/api/products", async (req, res) => {
-    const products = await storage.getProducts();
-    res.json(products);
+    try {
+      const products = await storage.getProducts();
+      res.json(products);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch products" });
+    }
   });
 
  app.get("/api/products/:id", async (req, res) => {
-    const { id } = req.params;
-    const products = await storage.getProducts(); // same source used by /api/products
-    const product = products.find((p: any) => p.id === id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+    try {
+      const { id } = req.params;
+      const products = await storage.getProducts(); // same source used by /api/products
+      const product = products.find((p: any) => p.id === id);
+      if (!product) {
+        return res.status(404).json({ message: "Product not found" });
+      }
+      res.json(product);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch product" });
     }
-    res.json(product);
   });
 
   // ADD PRODUCT (protected)
   app.post("/api/products", verifyAdmin, async (req, res) => {
-    const product = req.body;
-    const createdProduct = await storage.insertProduct(product);
-    res.json(createdProduct);
+    try {
+      const product = req.body;
+      const createdProduct = await storage.insertProduct(product);
+      res.json(createdProduct);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create product" });
+    }
   });
 
   // UPDATE PRODUCT (protected)
@@ -75,7 +87,7 @@ export async function registerRoutes(
       const data = req.body;
       const updated = await storage.updateProduct(id, data);
       res.json(updated);
-    } catch {
+    } catch (error) {
       res.status(500).json({ error: "Update failed" });
     }
   });
@@ -86,7 +98,7 @@ export async function registerRoutes(
       const id = req.params.id;
       await storage.deleteProduct(id);
       res.json({ success: true });
-    } catch {
+    } catch (error) {
       res.status(500).json({ error: "Delete failed" });
     }
   });
@@ -100,5 +112,50 @@ export async function registerRoutes(
       imageUrl: req.file?.path,
     });
   });
+
+  // GET CATEGORIES
+  app.get("/api/categories", async (req, res) => {
+    try {
+      const cats = await storage.getCategories();
+      res.json(cats);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to fetch categories" });
+    }
+  });
+
+  // ADD CATEGORY (protected)
+  app.post("/api/categories", verifyAdmin, async (req, res) => {
+    try {
+      const category = req.body;
+      const createdCategory = await storage.insertCategory(category);
+      res.json(createdCategory);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to create category" });
+    }
+  });
+
+  // UPDATE CATEGORY (protected)
+  app.put("/api/categories/:id", verifyAdmin, async (req, res) => {
+    try {
+      const id = req.params.id;
+      const data = req.body;
+      const updated = await storage.updateCategory(id, data);
+      res.json(updated);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to update category" });
+    }
+  });
+
+  // DELETE CATEGORY (protected)
+  app.delete("/api/categories/:id", verifyAdmin, async (req, res) => {
+    try {
+      const id = req.params.id;
+      await storage.deleteCategory(id);
+      res.json({ success: true });
+    } catch (error) {
+      res.status(500).json({ error: "Failed to delete category" });
+    }
+  });
+
   return httpServer;
 }

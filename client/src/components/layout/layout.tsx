@@ -10,7 +10,7 @@ export function Layout({ children }: LayoutProps) {
     <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 pt-16 md:pt-20">{children}</main>
-      <footer className="border-t border-border bg-card/50">
+      <footer className="border-t border-border bg-card/50 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>

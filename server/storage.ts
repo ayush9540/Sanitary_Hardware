@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { db } from "./db";
-import { products } from "../shared/schema";
+import { products, categories } from "../shared/schema";
 import { type User, type InsertUser } from "@shared/schema";
 import { randomUUID } from "crypto";
 
@@ -15,6 +15,10 @@ export interface IStorage {
   getProducts(): Promise<any[]>;
   deleteProduct(id: string): Promise<void>;
   updateProduct(id: string, data: any): Promise<any>;
+  insertCategory(category: any): Promise<any>;
+  getCategories(): Promise<any[]>;
+  deleteCategory(id: string): Promise<void>;
+  updateCategory(id: string, data: any): Promise<any>;
 }
 
 export class MemStorage implements IStorage {
@@ -59,6 +63,29 @@ export class MemStorage implements IStorage {
       .update(products)
       .set(data)
       .where(eq(products.id, id))
+      .returning();
+
+    return result[0];
+  }
+
+  async insertCategory(category: any) {
+    const result = await db.insert(categories).values(category).returning();
+    return result[0];
+  }
+
+  async getCategories() {
+    return await db.select().from(categories);
+  }
+
+  async deleteCategory(id: string) {
+    await db.delete(categories).where(eq(categories.id, id));
+  }
+
+  async updateCategory(id: string, data: any) {
+    const result = await db
+      .update(categories)
+      .set(data)
+      .where(eq(categories.id, id))
       .returning();
 
     return result[0];
