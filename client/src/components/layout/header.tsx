@@ -47,7 +47,7 @@ export function Header() {
           <div className="flex items-center gap-4">
             <Link href="/cart">
               <a className="relative" data-testid="link-cart-icon">
-                <Button variant="ghost" size="icon" className="relative">
+                <Button variant="ghost" size="icon" className="relative cursor-pointer">
                   <ShoppingBag className="h-5 w-5" />
                   <AnimatePresence>
                     {totalItems > 0 && (

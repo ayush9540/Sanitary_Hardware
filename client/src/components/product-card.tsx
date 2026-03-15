@@ -59,12 +59,12 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               </span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-lg font-bold">${product.price}</span>
+              <span className="text-lg font-bold">₹ {product.price}</span>
               <Button
                 size="sm"
                 variant="secondary"
                 onClick={handleAddToCart}
-                className="opacity-0 group-hover:opacity-100 transition-opacity"
+                className="group-hover:bg-primary cursor-pointer group-hover:text-primary-foreground transition-colors"
                 data-testid={`button-add-to-cart-${product.id}`}
               >
                 <ShoppingBag className="h-4 w-4 mr-1" />

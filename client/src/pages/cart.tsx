@@ -89,7 +89,7 @@ export default function CartPage() {
                       </div>
                       <button
                         onClick={() => removeFromCart(item.product.id)}
-                        className="p-2 text-muted-foreground hover:text-destructive transition-colors"
+                        className="p-2 text-muted-foreground hover:text-destructive transition-colors cursor-pointer"
                         data-testid={`button-remove-${item.product.id}`}
                       >
                         <Trash2 className="h-4 w-4" />
@@ -100,7 +100,7 @@ export default function CartPage() {
                       className="font-bold mt-2"
                       data-testid={`text-price-${item.product.id}`}
                     >
-                      ${item.product.price}
+                      ₹ {item.product.price}
                     </p>
 
                     <div className="flex items-center gap-2 mt-3">
@@ -108,7 +108,7 @@ export default function CartPage() {
                         onClick={() =>
                           updateQuantity(item.product.id, item.quantity - 1)
                         }
-                        className="p-1.5 rounded-lg border hover:bg-muted transition-colors"
+                        className="p-1.5 rounded-lg border hover:bg-muted transition-colors cursor-pointer"
                         data-testid={`button-decrease-${item.product.id}`}
                       >
                         <Minus className="h-3 w-3" />
@@ -123,7 +123,7 @@ export default function CartPage() {
                         onClick={() =>
                           updateQuantity(item.product.id, item.quantity + 1)
                         }
-                        className="p-1.5 rounded-lg border hover:bg-muted transition-colors"
+                        className="p-1.5 rounded-lg border hover:bg-muted transition-colors cursor-pointer"
                         data-testid={`button-increase-${item.product.id}`}
                       >
                         <Plus className="h-3 w-3" />
@@ -147,7 +147,7 @@ export default function CartPage() {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span data-testid="text-subtotal">${totalPrice.toFixed(2)}</span>
+                  <span data-testid="text-subtotal">₹ {totalPrice.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">Shipping</span>
@@ -155,7 +155,7 @@ export default function CartPage() {
                 </div>
                 <div className="border-t pt-3 flex justify-between font-semibold">
                   <span>Total</span>
-                  <span data-testid="text-total">${totalPrice.toFixed(2)}</span>
+                  <span data-testid="text-total">₹ {totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 

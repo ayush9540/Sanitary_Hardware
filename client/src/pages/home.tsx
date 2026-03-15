@@ -4,6 +4,7 @@ import { ProductCard } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { motion } from "framer-motion";
+import { HeroCarousel } from "@/components/layout/hero-carousel";
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -49,7 +50,7 @@ export default function Home() {
   return (
     <Layout>
       {" "}
-      <section className="relative py-16 md:py-24 overflow-hidden">
+      {/* <section className="relative py-16 md:py-24 overflow-hidden">
         {" "}
         <div className="absolute inset-0 bg-gradient-to-br from-accent/50 via-background to-background" />{" "}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
@@ -78,14 +79,16 @@ export default function Home() {
             </Button>
           </motion.div>
         </div>
-      </section>
-      <section id="products" className="py-12 md:py-16">
+      </section> */}
+      <HeroCarousel />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-4xl font-bold pt-16 pb-10">Shop By Category</div>
+      <section id="products" className="pt-6 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 overflow-x-auto pb-4 mb-8 scrollbar-hide">
             <Button
               variant={selectedCategory === null ? "default" : "outline"}
               onClick={() => setSelectedCategory(null)}
-              className="rounded-full whitespace-nowrap"
+              className="rounded-full whitespace-nowrap cursor-pointer"
               data-testid="button-category-all"
             >
               All Products
@@ -96,7 +99,7 @@ export default function Home() {
                 key={category}
                 variant={selectedCategory === category ? "default" : "outline"}
                 onClick={() => setSelectedCategory(category)}
-                className="rounded-full whitespace-nowrap"
+                className="rounded-full whitespace-nowrap cursor-pointer"
                 data-testid={`button-category-${category.toLowerCase()}`}
               >
                 {category}
@@ -104,7 +107,7 @@ export default function Home() {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
             {loading
               ? Array.from({ length: 8 }).map((_, index) => (
                   <div key={index} className="space-y-3">

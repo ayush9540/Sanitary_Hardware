@@ -116,7 +116,7 @@ export default function ProductPage() {
               className="text-3xl font-bold mb-6"
               data-testid="text-product-price"
             >
-              ${product.price}
+              ₹{product.price}
             </p>
 
             <p className="text-muted-foreground mb-8 leading-relaxed">
@@ -155,7 +155,7 @@ export default function ProductPage() {
               onClick={handleAddToCart}
               data-testid="button-add-to-cart"
             >
-              Add to Cart - ${(product.price * quantity).toFixed(2)}
+              Add to Cart - ₹{(product.price * quantity).toFixed(2)}
             </Button>
 
             <div className="space-y-3 pt-6 border-t">
@@ -165,7 +165,7 @@ export default function ProductPage() {
               </div>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Truck className="h-4 w-4" />
-                <span>Free shipping on orders over $100</span>
+                <span>Free shipping on orders over ₹5000</span>
               </div>
             </div>
           </motion.div>
