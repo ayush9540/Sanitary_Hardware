@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Header } from "./header";
-import { MapPin, Phone, MessageCircle } from "lucide-react";
+import { MapPin, Phone, MessageCircle, Home, ShoppingBag, User } from "lucide-react";
 
 interface LayoutProps {
   children: ReactNode;
@@ -36,9 +36,8 @@ export function Layout({ children }: LayoutProps) {
                   Kanhaiya Sanitary Store
                 </h3>
 
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  Trusted Hardware & Sanitary Store in Chhibramau. Genuine
-                  Brands • Fair Pricing • 20+ Years of Service
+                <p className="text-sm text-muted-foreground leading-relaxed tracking-wide max-w-md">
+                  Trusted Hardware & Sanitary Store in Chhibramau. Genuine Brands • Fair Pricing • 20+ Years of Service.
                 </p>
               </div>
 
@@ -79,20 +78,20 @@ export function Layout({ children }: LayoutProps) {
 
                   <ul className="space-y-2 text-sm text-muted-foreground">
                     <li>
-                      <a href="/" className="hover:text-foreground">
-                        Home
+                      <a href="/" className="hover:text-foreground flex items-center gap-2">
+                        <Home className="w-4 h-4 text-primary" /> <span>Home</span>
                       </a>
                     </li>
 
                     <li>
-                      <a href="/cart" className="hover:text-foreground">
-                        Cart
+                      <a href="/cart" className="hover:text-foreground flex items-center gap-2">
+                        <ShoppingBag className="w-4 h-4 text-primary" /> <span>Cart</span>
                       </a>
                     </li>
 
                     <li>
-                      <a href="/login" className="hover:text-foreground">
-                        Admin
+                      <a href="/login" className="hover:text-foreground flex items-center gap-2">
+                        <User className="w-4 h-4 text-primary" /> <span>Admin</span>
                       </a>
                     </li>
                   </ul>

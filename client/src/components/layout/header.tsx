@@ -19,34 +19,29 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 glass border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20">
-          <Link href="/">
-            <a className="flex items-center gap-2 group" data-testid="link-home">
-              <span className="text-xl md:text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                <img src="./brand_logo.png" alt="" style={{width: "80px"}}/>
-              </span>
-            </a>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/brand_logo.png" className="h-14 w-auto" />
           </Link>
 
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <a
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    location === link.href
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
-                  data-testid={`link-${link.label.toLowerCase()}`}
-                >
-                  {link.label}
-                </a>
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium transition-colors hover:text-primary ${
+                  location === link.href
+                    ? "text-primary"
+                    : "text-muted-foreground"
+                }`}
+                data-testid={`link-${link.label.toLowerCase()}`}
+              >
+                {link.label}
               </Link>
             ))}
           </nav>
 
           <div className="flex items-center gap-4">
-            <Link href="/cart">
-              <a className="relative" data-testid="link-cart-icon">
+            <Link href="/cart" className="relative" data-testid="link-cart-icon">
                 <Button variant="ghost" size="icon" className="relative cursor-pointer">
                   <ShoppingBag className="h-5 w-5" />
                   <AnimatePresence>
@@ -63,7 +58,6 @@ export function Header() {
                     )}
                   </AnimatePresence>
                 </Button>
-              </a>
             </Link>
 
             <button
@@ -91,18 +85,18 @@ export function Header() {
           >
             <nav className="flex flex-col py-4 px-6 gap-4">
               {navLinks.map((link) => (
-                <Link key={link.href} href={link.href}>
-                  <a
-                    className={`text-base font-medium py-2 ${
-                      location === link.href
-                        ? "text-primary"
-                        : "text-muted-foreground"
-                    }`}
-                    onClick={() => setMobileMenuOpen(false)}
-                    data-testid={`link-mobile-${link.label.toLowerCase()}`}
-                  >
-                    {link.label}
-                  </a>
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`text-base font-medium py-2 ${
+                    location === link.href
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  data-testid={`link-mobile-${link.label.toLowerCase()}`}
+                >
+                  {link.label}
                 </Link>
               ))}
             </nav>

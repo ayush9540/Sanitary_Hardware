@@ -5,7 +5,7 @@ import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, CreditCard, Lock } from "lucide-react";
+import { ArrowLeft, CreditCard, Lock, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function CheckoutPage() {
@@ -76,8 +76,8 @@ export default function CheckoutPage() {
       <Layout>
         <div className="max-w-7xl mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
-          <Link href="/">
-            <a className="text-primary hover:underline">Return to shop</a>
+          <Link href="/" className="text-primary hover:underline">
+            Return to shop
           </Link>
         </div>
       </Layout>
@@ -87,14 +87,9 @@ export default function CheckoutPage() {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <Link href="/cart">
-          <a
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
-            data-testid="link-back-to-cart"
-          >
+        <Link href="/cart" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors" data-testid="link-back-to-cart">
             <ArrowLeft className="h-4 w-4" />
             Back to cart
-          </a>
         </Link>
 
         <h1 className="text-3xl font-bold mb-8">Checkout</h1>
@@ -338,7 +333,7 @@ export default function CheckoutPage() {
                   size="lg"
                   onClick={handleWhatsAppOrder}
                 >
-                  Place Order on WhatsApp
+                  Place Order on WhatsApp <Phone className="h-4 w-4 ml-2" />
                 </Button>
               </div>
             </motion.div>

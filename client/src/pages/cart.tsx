@@ -26,11 +26,9 @@ export default function CartPage() {
               Looks like you haven't added any items to your cart yet.
             </p>
             <Link href="/">
-              <a>
-                <Button className="rounded-full px-8" data-testid="button-start-shopping">
-                  Start Shopping
-                </Button>
-              </a>
+              <Button className="rounded-full px-8" data-testid="button-start-shopping">
+                Start Shopping
+              </Button>
             </Link>
           </motion.div>
         </div>
@@ -65,14 +63,12 @@ export default function CartPage() {
                   className="flex gap-4 p-4 bg-card rounded-2xl border border-border/50"
                   data-testid={`cart-item-${item.product.id}`}
                 >
-                  <Link href={`/product/${item.product.id}`}>
-                    <a className="flex-shrink-0">
+                  <Link href={`/product/${item.product.id}`} className="flex-shrink-0">
                       <img
                         src={item.product.images[0]}
                         alt={item.product.name}
                         className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-xl"
                       />
-                    </a>
                   </Link>
 
                   <div className="flex-1 min-w-0">
@@ -81,10 +77,8 @@ export default function CartPage() {
                         <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
                           {item.product.category}
                         </p>
-                        <Link href={`/product/${item.product.id}`}>
-                          <a className="font-semibold hover:text-primary transition-colors">
-                            {item.product.name}
-                          </a>
+                        <Link href={`/product/${item.product.id}`} className="font-semibold hover:text-primary transition-colors">
+                          {item.product.name}
                         </Link>
                       </div>
                       <button
@@ -159,8 +153,7 @@ export default function CartPage() {
                 </div>
               </div>
 
-              <Link href="/checkout">
-                <a className="block w-full">
+              <Link href="/checkout" className="block w-full">
                   <Button
                     className="w-full rounded-xl"
                     size="lg"
@@ -169,13 +162,10 @@ export default function CartPage() {
                     Proceed to Checkout
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
-                </a>
               </Link>
 
-              <Link href="/">
-                <a className="block text-center mt-4 text-sm text-muted-foreground hover:text-primary transition-colors">
-                  Continue Shopping
-                </a>
+              <Link href="/" className="block text-center mt-4 text-sm text-muted-foreground hover:text-primary transition-colors">
+                Continue Shopping
               </Link>
             </div>
           </motion.div>

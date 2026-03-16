@@ -31,11 +31,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
     >
-      <Link href={`/product/${product.id}`}>
-        <a
-          className="group block bg-card rounded-2xl overflow-hidden border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300"
-          data-testid={`card-product-${product.id}`}
-        >
+      <Link href={`/product/${product.id}`} className="group block bg-card rounded-2xl overflow-hidden border border-border/50 shadow-sm hover:shadow-lg transition-all duration-300"
+          data-testid={`card-product-${product.id}`}>        
           <div className="aspect-square overflow-hidden bg-muted/30">
             <img
               src={product.images[0]}
@@ -72,7 +69,6 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               </Button>
             </div>
           </div>
-        </a>
       </Link>
     </motion.div>
   );

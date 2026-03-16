@@ -3,6 +3,9 @@ import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { ArrowDown } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const slides = [
   {
@@ -56,7 +59,7 @@ export function HeroCarousel() {
   }, [emblaApi]);
 
   return (
-    <section className="relative overflow-hidden">
+    <section className="relative overflow-hidden group">
 
       <div className="overflow-hidden cursor-grab active:cursor-grabbing" ref={emblaRef}>
         <div className="flex">
@@ -88,8 +91,16 @@ export function HeroCarousel() {
                     {slide.description}
                   </p>
 
-                  <Button size="lg" className="rounded-full px-8">
-                    Shop Collection
+                  <Button
+                    size="lg"
+                    className="rounded-full px-8"
+                    onClick={() =>
+                      document
+                        .getElementById("products")
+                        ?.scrollIntoView({ behavior: "smooth" })
+                    }
+                  >
+                    Shop Collection <ArrowDown className="h-4 w-4" />
                   </Button>
 
                 </div>
@@ -105,16 +116,16 @@ export function HeroCarousel() {
 
       <button
         onClick={scrollPrev}
-        className="absolute cursor-pointer left-6 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow"
+        className="absolute text-gray-300 hover:text-gray-800 left-6 top-1/2 -translate-y-1/2 bg-gray-800 font-bold text-2xl hover:bg-gray-200 cursor-pointer p-3 rounded-full shadow opacity-0 group-hover:opacity-60 transition duration-300"
       >
-        ‹
+        <ArrowLeft className="h-4 w-4" />
       </button>
 
       <button
         onClick={scrollNext}
-        className="absolute cursor-pointer right-6 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-3 rounded-full shadow"
+        className="absolute text-gray-300 hover:text-gray-800 right-6 top-1/2 -translate-y-1/2 bg-gray-800 font-bold text-2xl hover:bg-gray-200 cursor-pointer p-3 rounded-full shadow opacity-0 group-hover:opacity-60 transition duration-300"
       >
-        ›
+        <ArrowRight className="h-4 w-4" />
       </button>
 
       {/* Dots */}

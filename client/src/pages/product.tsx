@@ -31,7 +31,12 @@ export default function ProductPage() {
   const { toast } = useToast();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return(
+      <div className="min-h-screen flex items-center justify-center flex-col gap-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary border-t-transparent"></div>
+        <div>Loading...</div>
+      </div>
+    )
   }
 
   if (!product) {
@@ -58,14 +63,10 @@ export default function ProductPage() {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        <Link href="/">
-          <a
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
-            data-testid="link-back"
-          >
+        <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-6 transition-colors"
+            data-testid="link-back">        
             <ArrowLeft className="h-4 w-4" />
-            Back to shop
-          </a>
+            Back to shop          
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
@@ -128,7 +129,7 @@ export default function ProductPage() {
               <div className="flex items-center border rounded-lg">
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-3 hover:bg-muted transition-colors"
+                  className="p-3 hover:bg-muted transition-colors cursor-pointer"
                   data-testid="button-quantity-decrease"
                 >
                   <Minus className="h-4 w-4" />
@@ -141,7 +142,7 @@ export default function ProductPage() {
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-3 hover:bg-muted transition-colors"
+                  className="p-3 hover:bg-muted transition-colors cursor-pointer"
                   data-testid="button-quantity-increase"
                 >
                   <Plus className="h-4 w-4" />
@@ -155,7 +156,7 @@ export default function ProductPage() {
               onClick={handleAddToCart}
               data-testid="button-add-to-cart"
             >
-              Add to Cart - ₹{(product.price * quantity).toFixed(2)}
+              Add to Cart - ₹ {(product.price * quantity).toFixed(2)}
             </Button>
 
             <div className="space-y-3 pt-6 border-t">
@@ -165,7 +166,7 @@ export default function ProductPage() {
               </div>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Truck className="h-4 w-4" />
-                <span>Free shipping on orders over ₹5000</span>
+                <span>Free shipping on orders over ₹ 5000</span>
               </div>
             </div>
           </motion.div>

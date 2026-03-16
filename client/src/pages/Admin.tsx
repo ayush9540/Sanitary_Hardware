@@ -195,8 +195,8 @@ export default function Admin() {
 
       <Tabs defaultValue="products">
         <TabsList className="mb-6">
-          <TabsTrigger value="products">Products</TabsTrigger>
-          <TabsTrigger value="categories">Categories</TabsTrigger>
+          <TabsTrigger value="products" className="cursor-pointer">Products</TabsTrigger>
+          <TabsTrigger value="categories" className="cursor-pointer">Categories</TabsTrigger>
         </TabsList>
 
         <TabsContent value="categories">
@@ -353,7 +353,7 @@ export default function Admin() {
                 <div>
                   <Label htmlFor="product-image">Product image</Label>
                   <Input
-                    id="product-image"
+                    id="product-image" className="cursor-pointer"
                     type="file"
                     onChange={(e) => setImage(e.target.files?.[0] || null)}
                   />
