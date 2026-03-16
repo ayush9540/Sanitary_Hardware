@@ -262,7 +262,7 @@ export default function Admin() {
                       {categories.map((cat) => (
                         <div
                           key={cat.id}
-                          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 p-4 border rounded-lg"
+                          className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-4 border rounded-lg bg-muted"
                         >
                           <div>
                             <p className="font-medium">{cat.name}</p>
@@ -424,7 +424,7 @@ export default function Admin() {
                     {products.map((p: any) => (
                       <div
                         key={p.id}
-                        className="flex flex-col gap-3 rounded-xl border border-border bg-card p-4"
+                        className="flex flex-col gap-3 rounded-xl border border-border bg-muted p-4"
                       >
                         <div className="flex items-start gap-4">
                           <img
