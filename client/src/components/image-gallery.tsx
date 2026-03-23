@@ -13,17 +13,18 @@ interface ImageGalleryProps {
 }
 
 export function ImageGallery({ images, productName }: ImageGalleryProps) {
+  const imgs = images?.length ? images : [];
   const [selectedImage, setSelectedImage] = useState(0);
-
+  if (!imgs.length) return null;
   return (
     <div className="space-y-4">
       <div className="aspect-square rounded-2xl overflow-hidden bg-muted/30 relative">
         <AnimatePresence mode="wait">
           <motion.img
             key={selectedImage}
-            src={images?.[selectedImage]}
+            src={imgs?.[selectedImage]}
             alt={`${productName} - Image ${selectedImage + 1}`}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover hover:scale-105 transition duration-300"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -33,8 +34,8 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         </AnimatePresence>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
-        {images?.map((image, index) => (
+      <div className="grid grid-cols-4 gap-3">
+        {imgs?.map((image, index) => (
           <button
             key={index}
             onClick={() => setSelectedImage(index)}
@@ -48,7 +49,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
             <img
               src={image}
               alt={`${productName} - Thumbnail ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover rounded-lg cursor-pointer border"
             />
           </button>
         ))}
@@ -61,7 +62,7 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
           </AccordionTrigger>
           <AccordionContent>
             <div className="grid grid-cols-1 gap-4 pb-4">
-              {images?.map((image, index) => (
+              {imgs?.map((image, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 10 }}

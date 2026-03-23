@@ -16,7 +16,7 @@ export default function Admin() {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [image, setImage] = useState<File | null>(null);
+  const [images, setImages] = useState<File[]>([]);
   const [description, setDescription] = useState("");
   const [inStock, setInStock] = useState(true);
 
@@ -48,7 +48,7 @@ export default function Admin() {
     setName("");
     setPrice("");
     setCategory("");
-    setImage(null);
+    setImages([]);
     setDescription("");
     setInStock(true);
     setExistingImage("");
@@ -67,17 +67,20 @@ export default function Admin() {
     }
 
     try {
-      let imageUrl = existingImage;
-      if (image) {
+      let imageUrls: string[] = [];
+      if (images.length > 0) {
         const formData = new FormData();
-        formData.append("image", image);
+        images.forEach((file) => {
+          formData.append("images", file);
+        });
         const uploadRes = await fetch("/api/upload", {
           method: "POST",
           body: formData,
         });
-        if (!uploadRes.ok) throw new Error("Image upload failed");
         const data = await uploadRes.json();
-        imageUrl = data.imageUrl;
+        imageUrls = data.imageUrls;
+      } else if (existingImage) {
+        imageUrls = [existingImage];
       }
 
       const res = await fetch(editingId ? `/api/products/${editingId}` : "/api/products", {
@@ -90,7 +93,8 @@ export default function Admin() {
           name,
           price,
           category,
-          image: imageUrl,
+          image: imageUrls[0] || "",
+          images: imageUrls,
           description,
           inStock: String(inStock),
         }),
@@ -118,7 +122,7 @@ export default function Admin() {
     setName(p.name);
     setPrice(p.price);
     setCategory(p.category);
-    setImage(null);
+    setImages([]);
     setExistingImage(p.image);
     setDescription(p.description);
     setInStock(p.inStock === "true");
@@ -354,8 +358,8 @@ export default function Admin() {
                   <Label htmlFor="product-image">Product image</Label>
                   <Input
                     id="product-image" className="cursor-pointer"
-                    type="file"
-                    onChange={(e) => setImage(e.target.files?.[0] || null)}
+                    type="file" multiple
+                    onChange={(e) => setImages(Array.from(e.target.files || []))}
                   />
                   {editingId && existingImage && (
                     <img

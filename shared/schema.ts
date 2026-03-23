@@ -24,6 +24,7 @@ export const products = pgTable("products", {
   description: text("description"),
   category: text("category"),
   image: text("image"),
+  images: text("images").array(),
   inStock: text("in_stock"),
 });
 export const insertProductSchema = createInsertSchema(products);

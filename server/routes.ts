@@ -104,12 +104,14 @@ export async function registerRoutes(
   });
 
   // IMAGE UPLOAD
-  app.post("/api/upload", upload.single("image"), (req, res) => {
-    if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
+  app.post("/api/upload", upload.array("images", 5), (req, res) => {
+    const files = req.files as Express.Multer.File[];
+    if (!files || files.length === 0) {
+      return res.status(400).json({ error: "No files uploaded" });
     }
-   res.json({
-      imageUrl: req.file?.path,
+    const imageUrls = files.map((file) => file.path);
+    res.json({
+      imageUrls,
     });
   });
 

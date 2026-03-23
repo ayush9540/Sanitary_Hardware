@@ -19,7 +19,6 @@ export default function ProductPage() {
     const p = await res.json();
     return {
       ...p,
-      images: [p.image], // convert single image to array
       rating: 4,
       reviews: 0
     };
@@ -75,7 +74,13 @@ export default function ProductPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <ImageGallery images={product.images} productName={product.name} />
+            <ImageGallery images={
+              product.images && product.images.length > 1
+                ? product.images
+                : product.image
+                ? [product.image]
+                : []
+            } productName={product.name}/>
           </motion.div>
 
           <motion.div
