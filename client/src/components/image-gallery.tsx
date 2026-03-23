@@ -22,15 +22,31 @@ export function ImageGallery({ images, productName }: ImageGalleryProps) {
         <AnimatePresence mode="wait">
           <motion.img
             key={selectedImage}
-            src={imgs?.[selectedImage]}
-            alt={`${productName} - Image ${selectedImage + 1}`}
-            className="w-full h-full object-cover hover:scale-105 transition duration-300"
+            src={imgs[selectedImage]}
+            alt={productName}
+            className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            data-testid={`img-product-main-${selectedImage}`}
+            transition={{ duration: 0.1 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={(e, info) => {
+              if (info.offset.x < -50) {
+                setSelectedImage((prev) =>
+                  prev === imgs.length - 1 ? 0 : prev + 1
+                );
+              } else if (info.offset.x > 50) {
+                setSelectedImage((prev) =>
+                  prev === 0 ? imgs.length - 1 : prev - 1
+                );
+              }
+            }}
           />
+          <button onClick={() =>setSelectedImage((prev) => prev === 0 ? imgs.length - 1 : prev - 1)}
+            className="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow cursor-pointer">‹</button>
+          <button onClick={() => setSelectedImage((prev) => prev === imgs.length - 1 ? 0 : prev + 1)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow cursor-pointer">›</button>
         </AnimatePresence>
       </div>
 
