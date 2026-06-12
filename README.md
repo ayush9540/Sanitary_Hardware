@@ -58,3 +58,9 @@ PostgreSQL Database (Neon)
 Cloudinary (Image Storage)
 
 Images are stored on Cloudinary, not on the server.
+
+
+
+
+----------Point to remember---------
+Always delete local storage data from admin if product/category fail from performing any CRUD operation.
