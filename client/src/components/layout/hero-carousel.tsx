@@ -116,14 +116,14 @@ export function HeroCarousel() {
 
       <button
         onClick={scrollPrev}
-        className="absolute text-gray-300 hover:text-gray-800 left-6 top-1/2 -translate-y-1/2 bg-gray-800 font-bold text-2xl hover:bg-gray-200 cursor-pointer p-3 rounded-full shadow opacity-0 group-hover:opacity-60 transition duration-300"
+        className="absolute text-white left-6 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/30 cursor-pointer p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition duration-300"
       >
         <ArrowLeft className="h-4 w-4" />
       </button>
 
       <button
         onClick={scrollNext}
-        className="absolute text-gray-300 hover:text-gray-800 right-6 top-1/2 -translate-y-1/2 bg-gray-800 font-bold text-2xl hover:bg-gray-200 cursor-pointer p-3 rounded-full shadow opacity-0 group-hover:opacity-60 transition duration-300"
+        className="absolute text-white right-6 top-1/2 -translate-y-1/2 bg-white/15 hover:bg-white/30 cursor-pointer p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition duration-300"
       >
         <ArrowRight className="h-4 w-4" />
       </button>

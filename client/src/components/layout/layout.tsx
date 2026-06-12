@@ -41,6 +41,21 @@ export function Layout({ children }: LayoutProps) {
                 </p>
               </div>
 
+              <div className="rounded-3xl border border-border/70 bg-white p-5 shadow-sm">
+                <p className="text-sm uppercase tracking-[0.3em] text-primary mb-3">Premium service</p>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  Local inventory, fast advice and purchase support for every project.
+                </p>
+                <a
+                  href="https://wa.me/919540772145"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
+                >
+                  Contact via WhatsApp
+                </a>
+              </div>
+
               {/* Contact + Quick Links */}
 
               <div className="grid grid-cols-2 gap-8">

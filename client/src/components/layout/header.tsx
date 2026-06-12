@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { ShoppingBag, Menu, X } from "lucide-react";
+import { ShoppingBag, Menu, X, PhoneCall } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "@/lib/cart-context";
 import { Button } from "@/components/ui/button";
@@ -40,7 +40,16 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-4">
+            <a
+              href="https://wa.me/919540772145"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-white px-4 py-2 text-sm font-medium text-foreground transition hover:border-primary hover:text-primary shadow-sm"
+            >
+              <PhoneCall className="h-4 w-4" />
+              Need help?
+            </a>
             <Link href="/cart" className="relative" data-testid="link-cart-icon">
                 <Button variant="ghost" size="icon" className="relative cursor-pointer">
                   <ShoppingBag className="h-5 w-5" />
@@ -59,9 +68,19 @@ export function Header() {
                   </AnimatePresence>
                 </Button>
             </Link>
+          </div>
 
+          <div className="flex items-center gap-4 md:hidden">
+            <a
+              href="https://wa.me/919540772145"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-white px-3 py-2 text-xs font-medium text-foreground transition hover:border-primary hover:text-primary"
+            >
+              <PhoneCall className="h-4 w-4" />
+            </a>
             <button
-              className="md:hidden p-2"
+              className="p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               data-testid="button-mobile-menu"
             >

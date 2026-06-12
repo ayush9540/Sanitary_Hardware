@@ -176,6 +176,41 @@ export default function ProductPage() {
             </div>
           </motion.div>
         </div>
+
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="grid gap-8 lg:grid-cols-3">
+            <div className="rounded-3xl border border-border/70 bg-white p-8 shadow-sm">
+              <h2 className="text-xl font-semibold mb-3">Product Highlights</h2>
+              <ul className="space-y-3 text-sm text-muted-foreground">
+                <li>High-quality finish designed for long-lasting performance.</li>
+                <li>Easy installation with standard fittings and strong construction.</li>
+                <li>Ideal for bathrooms, kitchens, and commercial washrooms.</li>
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-border/70 bg-white p-8 shadow-sm">
+              <h2 className="text-xl font-semibold mb-3">Why This Product</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Every item in our premium range is carefully selected for durability, elegant design, and reliable operation. This product delivers a refined look while maintaining practical function.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-border/70 bg-white p-8 shadow-sm">
+              <h2 className="text-xl font-semibold mb-3">Warranty & Support</h2>
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                Backed by warranty support from our store and service help from our experienced team.
+              </p>
+              <a
+                href="https://wa.me/919540772145"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition hover:bg-primary/90"
+              >
+                Chat with advisor
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     </Layout>
   );
